@@ -7,6 +7,8 @@ db = SQLAlchemy()
 class User(db.Model):
         __tablename__= 'user'
         id: Mapped[int] = mapped_column(primary_key=True)
+        name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+        last_name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
         email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
         password: Mapped[str] = mapped_column(nullable=False)
         is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
@@ -22,6 +24,9 @@ class Characters (db.Model):
     __tablename__= 'characters'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    gender: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    hair_color: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    eye_color: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     height: Mapped[str] = mapped_column(Integer)
     weight: Mapped[str] = mapped_column(Integer)
     favorite_by: Mapped[list['FavoriteCharacters']] = relationship(
@@ -64,6 +69,7 @@ class Starships(db.Model):
     __tablename__ = 'starships'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(20), unique=True)
+    tipology: Mapped[str] = mapped_column(String, unique=True)
     favorite_by: Mapped[list['FavoriteStarships']] = relationship(back_populates='starships')
 
 class FavoriteStarships(db.Model):
